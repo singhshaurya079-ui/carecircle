@@ -1,0 +1,1071 @@
+:root {
+  color-scheme: light;
+  --ink: #172126;
+  --muted: #66757b;
+  --line: #d9e1df;
+  --panel: #ffffff;
+  --page: #f4f7f5;
+  --blue: #245b78;
+  --green: #3f7d57;
+  --amber: #a66321;
+  --rose: #9c4050;
+  --shadow: 0 20px 60px rgba(23, 33, 38, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--page);
+  color: var(--ink);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.is-hidden {
+  display: none !important;
+}
+
+button:focus-visible,
+.nav-tab:focus-visible,
+.segment:focus-visible,
+.primary-button:focus-visible,
+.secondary-button:focus-visible,
+.icon-button:focus-visible,
+.metric:focus-visible {
+  outline: 2px solid var(--blue); /* Or a color that stands out */
+  outline-offset: 2px;
+}
+
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 292px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: #102229;
+  color: #f7fbfa;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.brand,
+.person-panel {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-mark,
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+}
+
+.brand-mark {
+  background: #b7ddc7;
+  color: #102229;
+}
+
+.avatar {
+  background: #f4c15d;
+  color: #2e2513;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+.brand h1 {
+  font-size: 22px;
+  line-height: 1.1;
+}
+
+.brand p,
+.muted {
+  color: rgba(247, 251, 250, 0.68);
+}
+
+.eyebrow {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.sidebar .eyebrow {
+  color: rgba(247, 251, 250, 0.58);
+}
+
+.patient-switcher-panel {
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.patient-switcher-panel .patient-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.patient-switcher-panel h2 {
+  font-size: 18px;
+  color: #ffffff;
+}
+
+.patient-selection {
+  display: flex;
+  flex-direction: column; /* Stack select and button on smaller screens */
+  gap: 8px;
+}
+
+.patient-selection select {
+  width: 100%;
+  min-height: 40px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  padding: 0 10px;
+  appearance: none; /* Remove default browser dropdown arrow */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23f7fbfa'/%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1.5em;
+  font-size: 1em;
+}
+
+.patient-selection select:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.add-patient-button {
+  width: 100%;
+  min-height: 36px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 0 12px;
+}
+
+.add-patient-button:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Specific styling for new profile dialog fields */
+.composer-form textarea#profileMedicalConditions {
+  min-height: 80px; /* Ensure enough space for medical conditions */
+}
+
+.danger-button {
+  min-height: 40px;
+  border-radius: 8px;
+  border: 1px solid var(--rose);
+  background: var(--rose);
+  color: #ffffff;
+  font-weight: 800;
+  padding: 0 16px;
+}
+
+.danger-button:hover:not(:disabled) {
+  background: #8e3845;
+  border-color: #8e3845;
+}
+
+.danger-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.emergency-fab {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #e74c3c; /* Bright red */
+  color: #ffffff;
+  font-size: 28px;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border: none;
+  z-index: 1000;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.emergency-fab:hover {
+  background: #c0392b; /* Darker red on hover */
+}
+
+.emergency-info {
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+}
+
+.emergency-info p {
+  margin: 5px 0;
+  font-size: 1.1em;
+}
+
+.emergency-info strong {
+  color: var(--ink);
+}
+
+.emergency-contacts-list h3 {
+  font-size: 1.2em;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  color: var(--ink);
+}
+
+.emergency-contacts-list .contact-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.emergency-contacts-list .contact-entry p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.emergency-contacts-list .contact-entry a {
+  text-align: center;
+  text-decoration: none;
+}
+
+.emergency-contacts-list .contact-entry a.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.nav-tabs {
+  display: grid;
+  gap: 6px;
+}
+
+.nav-tab {
+  min-height: 42px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: rgba(247, 251, 250, 0.76);
+  text-align: left;
+  padding: 0 14px;
+}
+
+.nav-tab:hover,
+.nav-tab.is-active {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+.quick-card {
+  margin-top: auto;
+  border-radius: 8px;
+  padding: 16px;
+  background: #f8d8df;
+  color: #4b1820;
+  display: grid;
+  gap: 6px;
+}
+
+.quick-card .eyebrow {
+  color: #8c3544;
+}
+
+.quick-card .compact {
+  margin-top: 8px;
+  min-height: 36px;
+  border-color: rgba(75, 24, 32, 0.24);
+}
+
+.main {
+  padding: 26px;
+  display: grid;
+  align-content: start;
+  gap: 20px;
+}
+
+.countdown-banner {
+  background: var(--blue);
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 700;
+  text-align: center;
+  font-size: 1.1em;
+}
+
+.section-title {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.contacts-section {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  padding-bottom: 14px; /* Space for the bottom of cards */
+}
+
+.contact-groups-container {
+  padding: 14px;
+  display: grid;
+  gap: 24px;
+}
+
+.contact-group {
+  display: grid;
+  gap: 12px;
+}
+
+.contact-group h3 {
+  font-size: 1.4em; /* Slightly larger for prominence */
+  margin: 0;
+  color: var(--ink);
+  font-weight: 800;
+  padding-bottom: 8px; /* Space below heading */
+  border-bottom: 1px solid var(--line); /* Separator line */
+  margin-bottom: 16px; /* Space between heading and grid */
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+}
+
+.contact-card {
+  background: #fbfdfc;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 16px; /* Slightly increased padding */
+  display: grid;
+  gap: 8px;
+  min-height: 120px;
+  align-content: start;
+  box-shadow: 0 4px 12px rgba(23, 33, 38, 0.06); /* Subtle shadow for depth */
+  transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out; /* Smooth transitions */
+}
+
+.contact-card:hover {
+  transform: translateY(-2px); /* Lift on hover */
+  box-shadow: 0 6px 16px rgba(23, 33, 38, 0.1); /* More pronounced shadow on hover */
+}
+
+.contact-card h4 {
+  font-size: 1.2em; /* Slightly larger for prominence */
+  margin: 0;
+  line-height: 1.2;
+  font-weight: 700; /* Explicitly bold */
+  margin-bottom: 4px; /* Space between name and details */
+}
+
+.contact-card p {
+  color: var(--muted);
+  font-size: 0.9em;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.contact-card .card-actions {
+  margin-top: auto; /* Push actions to the bottom */
+  display: flex;
+  gap: 8px;
+  justify-content: stretch;
+}
+
+.contact-card .card-actions button {
+  flex: 1; /* Make buttons fill available space */
+  min-height: 36px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: #ffffff;
+}
+
+.contact-card .card-actions button[data-action="edit-contact"] {
+  background: var(--blue);
+  color: white;
+  border-color: var(--blue);
+}
+
+.contact-card .card-actions button[data-action="edit-contact"]:hover {
+  background: #1c4b63; /* Darker blue on hover */
+  border-color: #1c4b63;
+}
+
+.contact-card .card-actions button[data-action="delete-contact"] {
+  background: #f8d8df; /* Rose color from quick-card */
+  color: var(--rose);
+  border-color: #f8d8df;
+}
+
+.contact-card .card-actions button[data-action="delete-contact"]:hover {
+  background: #f5c7d0; /* Lighter rose on hover */
+  border-color: #f5c7d0;
+}
+
+.topbar,
+.toolbar,
+.modal-head,
+.modal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.topbar h2 {
+  font-size: 32px;
+}
+
+.topbar-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.primary-button,
+.secondary-button,
+.icon-button,
+.segment {
+  min-height: 40px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: #ffffff;
+  color: var(--ink);
+}
+
+.primary-button {
+  border-color: var(--blue);
+  background: var(--blue);
+  color: #ffffff;
+  font-weight: 800;
+  padding: 0 16px;
+}
+
+.secondary-button {
+  padding: 0 16px;
+}
+
+.icon-button {
+  width: 42px;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.metric {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 18px;
+  min-height: 104px;
+  display: grid;
+  align-content: space-between;
+  cursor: pointer;
+  transition: background-color 0.1s ease-in-out;
+}
+
+.metric:hover {
+  background-color: var(--page); /* Lighten on hover */
+}
+
+.metric span {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.metric strong {
+  font-size: 26px;
+  line-height: 1.05;
+}
+
+.status-panel,
+.medicine-plan {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 16px;
+  display: grid;
+  gap: 14px;
+}
+
+.status-head,
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.status-head h3,
+.section-head h3 {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.status-chip {
+  border-radius: 999px;
+  background: #e7f0eb;
+  color: var(--green);
+  font-weight: 800;
+  padding: 7px 12px;
+  white-space: nowrap;
+}
+
+.status-chip.needs-attention {
+  background: #f8d8df;
+  color: var(--rose);
+}
+
+.status-chip.active {
+  background: #dcebf2;
+  color: var(--blue);
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.status-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  min-height: 86px;
+  display: grid;
+  align-content: space-between;
+  background: #fbfdfc;
+}
+
+.status-card span,
+.lane-label {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.status-card strong {
+  font-size: 17px;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.care-lanes {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.care-lane {
+  display: grid;
+  gap: 8px;
+}
+
+.lane-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.lane-count {
+  color: var(--ink);
+  font-weight: 800;
+}
+
+.progress-track {
+  height: 9px;
+  border-radius: 999px;
+  background: #edf2f0;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--green);
+}
+
+.medicine-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.dose-panel {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  display: grid;
+  gap: 10px;
+  background: #fbfdfc;
+}
+
+.dose-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.dose-head strong {
+  font-size: 18px;
+}
+
+.dose-head input {
+  width: 118px;
+  min-height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0 10px;
+}
+
+.dose-panel textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 11px 12px;
+  color: var(--ink);
+  resize: vertical;
+}
+
+.dose-state {
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.reminder-dialog {
+  width: min(440px, calc(100vw - 28px));
+  border: 0;
+  border-radius: 8px;
+  padding: 0;
+  box-shadow: var(--shadow);
+}
+
+.reminder-dialog::backdrop {
+  background: rgba(16, 34, 41, 0.34);
+}
+
+.reminder-card {
+  display: grid;
+  gap: 16px;
+  padding: 20px;
+}
+
+.reminder-card h2 {
+  font-size: 26px;
+  line-height: 1.15;
+}
+
+.reminder-card p {
+  line-height: 1.5;
+}
+
+.reminder-actions {
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+}
+
+.workspace {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.toolbar {
+  padding: 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.segmented {
+  display: flex;
+  padding: 3px;
+  background: #edf2f0;
+  border-radius: 8px;
+}
+
+.segment {
+  border: 0;
+  background: transparent;
+  padding: 0 14px;
+}
+
+.segment.is-active {
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(23, 33, 38, 0.12);
+}
+
+.search {
+  display: grid;
+  gap: 5px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.search input {
+  width: min(320px, 44vw);
+  min-height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0 12px;
+  color: var(--ink);
+  text-transform: none;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  gap: 14px;
+  padding: 14px;
+}
+
+.card {
+  background: #fbfdfc; /* Ensure consistent background for cards */
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  display: grid;
+  gap: 12px;
+  min-height: 190px;
+  box-shadow: 0 4px 12px rgba(23, 33, 38, 0.06); /* Subtle shadow for depth */
+  transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out; /* Smooth transitions */
+}
+
+.card:hover {
+  transform: translateY(-2px); /* Lift on hover */
+  box-shadow: 0 6px 16px rgba(23, 33, 38, 0.1); /* More pronounced shadow on hover */
+}
+
+.card-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.card h3 {
+  font-size: 18px;
+  line-height: 1.22;
+  overflow-wrap: anywhere;
+}
+
+.pill {
+  border-radius: 999px;
+  padding: 5px 9px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.pill.task {
+  background: var(--green);
+}
+
+.pill.medicine {
+  background: var(--rose);
+}
+
+.pill.appointment {
+  background: var(--blue);
+}
+
+.pill.note {
+  background: var(--amber);
+}
+
+.pill.contact {
+  background: #5c527f;
+}
+
+.card-details {
+  color: #45565c;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.meta-list {
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.card-actions button {
+  flex: 1;
+  min-height: 36px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: #ffffff;
+}
+
+.card.is-done {
+  background: #f5faf7;
+}
+
+.empty {
+  grid-column: 1 / -1;
+  min-height: 260px;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  text-align: center;
+}
+
+.composer {
+  width: min(560px, calc(100vw - 28px));
+  border: 0;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 0;
+}
+
+.composer::backdrop {
+  background: rgba(16, 34, 41, 0.45);
+}
+
+.profile-required-message {
+  font-size: 14px;
+  color: var(--rose);
+  margin-top: 5px;
+  display: none; /* Hidden by default */
+}
+
+/* Show message when profile dialog is required */
+.composer[data-required="true"] .profile-required-message {
+  display: block;
+}
+
+.composer-form {
+  display: grid;
+  gap: 14px;
+  padding: 20px;
+}
+
+.composer-form label {
+  display: grid;
+  gap: 7px;
+  color: #44545a;
+  font-weight: 800;
+}
+
+.composer-form input,
+.composer-form select,
+.composer-form textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 11px 12px;
+  color: var(--ink);
+  resize: vertical;
+}
+
+.composer-form input:invalid,
+.composer-form textarea:invalid,
+.composer-form select:invalid {
+  border-color: var(--rose); /* Highlight invalid fields */
+}
+
+.error-message {
+  color: var(--rose);
+  font-size: 13px;
+  margin-top: -4px; /* Adjust spacing */
+  display: none; /* Hidden by default */
+}
+
+/* Show error message when the associated input is invalid and has been interacted with */
+.composer-form input:invalid:not(:placeholder-shown) + .error-message,
+.composer-form input[aria-invalid="true"] + .error-message,
+.composer-form textarea:invalid:not(:placeholder-shown) + .error-message,
+.composer-form textarea[aria-invalid="true"] + .error-message,
+.composer-form select:invalid + .error-message {
+  display: block;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.phone-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.phone-row span {
+  min-height: 42px;
+  display: grid;
+  place-items: center;
+  padding: 0 12px;
+  background: #edf2f0;
+  color: var(--ink);
+}
+
+.phone-row input {
+  border: 0;
+  border-radius: 0;
+}
+
+@media (max-width: 960px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+  }
+
+  .nav-tabs {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .summary-grid,
+  .status-grid,
+  .care-lanes,
+  .medicine-grid,
+  .board,
+  .contact-grid {
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+  }
+
+  .patient-selection {
+    flex-direction: row; /* Keep select and button in a row on wider mobile */
+  }
+
+  .patient-selection select,
+  .add-patient-button {
+    flex: 1; /* Make them share space */
+  }
+}
+
+@media (max-width: 640px) {
+  .main,
+  .sidebar {
+    padding: 16px;
+  }
+
+  .countdown-banner {
+    padding: 10px 16px;
+    font-size: 1em;
+  }
+
+  .topbar,
+  .toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .topbar-actions,
+  .segmented,
+  .search input {
+    width: 100%;
+  }
+
+  .segment {
+    flex: 1;
+    padding: 0 8px;
+  }
+
+  .status-head,
+  .section-head,
+  .reminder-actions {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .summary-grid,
+  .status-grid,
+  .care-lanes,
+  .medicine-grid,
+  .board,
+  .contact-grid,
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .patient-selection {
+    flex-direction: column; /* Stack select and button vertically on very small screens */
+  }
+
+  .section-head .secondary-button,
+  .reminder-actions button {
+    width: 100%;
+  }
+
+  .nav-tabs {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .emergency-fab {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    bottom: 16px;
+    right: 16px;
+  }
+}

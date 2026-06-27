@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CareCircle</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">CC</div>
+          <div>
+            <h1>CareCircle</h1>
+            <p>Shared care coordination</p>
+          </div>
+        </div>
+
+        <section class="patient-switcher-panel" aria-label="Select care recipient">
+          <div class="patient-info">
+            <div class="avatar" id="personAvatar" aria-hidden="true">--</div>
+            <div>
+              <p class="eyebrow">Caring for</p>
+              <h2 id="patientNameDisplay">Add a loved one</h2>
+              <p class="muted" id="patientContextDisplay">Start their care plan</p>
+            </div>
+          </div>
+          <div class="patient-selection">
+            <select id="patientSwitcher" aria-label="Switch patient">
+              <!-- Options populated by JavaScript -->
+            </select>
+            <button class="add-patient-button" type="button" id="addPatientButton">+ Add Patient</button>
+          </div>
+        </section>
+
+        <nav class="nav-tabs" aria-label="Dashboard sections">
+          <button class="nav-tab is-active" type="button" data-view="overview">Overview</button>
+          <button class="nav-tab" type="button" data-view="tasks">Tasks</button>
+          <button class="nav-tab" type="button" data-view="medicine">Medicine</button>
+          <button class="nav-tab" type="button" data-view="appointments">Appointments</button>
+          <button class="nav-tab" type="button" data-view="procedures">Procedures & Surgeries</button>
+          <button class="nav-tab" type="button" data-view="notes">Notes</button>
+          <button class="nav-tab" type="button" data-view="contacts">Contacts</button>
+        </nav>
+
+        <div class="quick-card">
+          <p class="eyebrow">Emergency</p>
+          <strong id="emergencyName">Add emergency contact</strong>
+          <span id="emergencyPhone">No phone saved</span>
+          <button class="secondary-button compact" type="button" id="editProfile">Edit profile</button>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow" id="todayLabel"></p>
+            <h2 id="viewTitle">Overview</h2>
+          </div>
+          <div class="topbar-actions">
+            <button class="secondary-button" type="button" id="clearItems">Clear items</button>
+            <button class="primary-button" type="button" id="openComposer">+ Add</button>
+          </div>
+        </header>
+
+        <div id="countdownAlertBanner" class="countdown-banner is-hidden" role="alert" aria-live="polite">
+          <span id="countdownAlertText"></span>
+        </div>
+
+        <div id="overviewContent" class="view-section" data-view="overview">
+          <section class="summary-grid" aria-label="Care summary">
+            <article class="metric" data-view="tasks" tabindex="0" role="button">
+              <span>Open tasks</span>
+              <strong id="openTaskCount">0</strong>
+            </article>
+            <article class="metric" data-view="medicine" tabindex="0" role="button">
+              <span>Medicine due</span>
+              <strong id="medicineDueCount">0</strong>
+            </article>
+            <article class="metric" data-view="appointments" tabindex="0" role="button">
+              <span>Next appointment</span>
+              <strong id="nextAppointment">None</strong>
+            </article>
+            <article class="metric" data-view="contacts" tabindex="0" role="button">
+              <span>Care team</span>
+              <strong id="contactCount">0</strong>
+            </article>
+          </section>
+
+          <section class="status-panel" aria-label="Live care status">
+            <div class="status-head">
+              <div>
+                <p class="eyebrow">Live status</p>
+                <h3 id="currentStatus">Ready to start care</h3>
+              </div>
+              <span class="status-chip" id="statusChip">No active items</span>
+            </div>
+            <div class="status-grid">
+              <article class="status-card">
+                <span>Going on now</span>
+                <strong id="nowStatus">Nothing scheduled</strong>
+              </article>
+              <article class="status-card">
+                <span>Up next</span>
+                <strong id="nextStatus">No upcoming care</strong>
+              </article>
+              <article class="status-card">
+                <span>Completed today</span>
+                <strong id="completedTodayStatus">0 done</strong>
+              </article>
+            <article class="status-card">
+              <span>Care progress</span>
+              <strong id="careProgressStatus">0%</strong>
+            </article>
+          </div>
+          <div class="care-lanes" id="careLanes" aria-label="Care areas"></div>
+        </section>
+        </div>
+
+        <div id="medicinePlanContent" class="view-section is-hidden" data-view="medicine">
+          <section class="medicine-plan" aria-label="Daily medicine plan">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Medicine plan</p>
+                <h3>Morning and night medicine</h3>
+              </div>
+              <button class="secondary-button" type="button" id="saveMedicinePlan">Save plan</button>
+            </div>
+            <div class="medicine-grid">
+              <article class="dose-panel">
+                <div class="dose-head">
+                  <strong>Morning</strong>
+                  <input id="morningMedicineTime" type="time" value="08:00" aria-label="Morning medicine time">
+                </div>
+                <textarea id="morningMedicineList" rows="4" maxlength="400" placeholder="Example: Metformin 500mg, Vitamin D"></textarea>
+                <p id="morningMedicineState" class="dose-state">No morning medicines saved.</p>
+              </article>
+              <article class="dose-panel">
+                <div class="dose-head">
+                  <strong>Night</strong>
+                  <input id="nightMedicineTime" type="time" value="20:00" aria-label="Night medicine time">
+                </div>
+                <textarea id="nightMedicineList" rows="4" maxlength="400" placeholder="Example: Atorvastatin 10mg, Melatonin"></textarea>
+                <p id="nightMedicineState" class="dose-state">No night medicines saved.</p>
+              </article>
+            </div>
+          </section>
+        </div>
+
+        <div id="proceduresContent" class="view-section is-hidden" data-view="procedures">
+          <section class="workspace">
+            <div class="toolbar">
+                <label class="search">
+                    <span>Search procedures</span>
+                    <input id="procedureSearchInput" type="search" placeholder="Find by title, details...">
+                </label>
+            </div>
+            <div class="board" id="proceduresBoard" aria-live="polite"></div>
+          </section>
+        </div>
+
+        <div id="contactsContent" class="view-section is-hidden" data-view="contacts">
+          <section class="contacts-section">
+            <div class="toolbar">
+                <label class="search">
+                    <span>Search contacts</span>
+                    <input id="contactSearchInput" type="search" placeholder="Find by name, role, relationship...">
+                </label>
+            </div>
+            <div class="contact-groups-container">
+                <div class="contact-group">
+                    <h3>Family & Caregivers</h3>
+                    <div class="contact-grid" id="familyCaregiversGrid"></div>
+                </div>
+                <div class="contact-group">
+                    <h3>Medical Professionals</h3>
+                    <div class="contact-grid" id="medicalProfessionalsGrid"></div>
+                </div>
+            </div>
+          </section>
+        </div>
+
+        <section class="workspace view-section is-hidden" id="itemView">
+          <div class="toolbar">
+            <div class="segmented" role="group" aria-label="Item filter">
+              <button type="button" class="segment is-active" data-filter="all">All</button>
+              <button type="button" class="segment" data-filter="today">Today</button>
+              <button type="button" class="segment" data-filter="open">Open</button>
+            </div>
+            <label class="search">
+              <span>Search</span>
+              <input id="searchInput" type="search" placeholder="Find tasks, meds, notes...">
+            </label>
+          </div>
+
+          <div class="board" id="board" aria-live="polite"></div>
+        </section>
+      </main>
+    </div>
+
+    <dialog class="composer" id="composer">
+      <form method="dialog" class="composer-form" id="composerForm">
+        <div class="modal-head">
+          <div>
+            <p class="eyebrow">New care item</p>
+            <h2>Add to CareCircle</h2>
+          </div>
+          <button class="icon-button" type="button" id="closeComposer" aria-label="Close">×</button>
+        </div>
+
+        <label>
+          Type
+          <select id="itemType" required>
+            <option value="task">Task</option>
+            <option value="medicine">Medicine</option>
+            <option value="appointment">Appointment</option>
+            <option value="procedure">Procedure / Surgery</option>
+            <option value="note">Note</option>
+            <option value="contact">Contact</option>
+          </select>
+        </label>
+
+        <label id="itemTitleLabel">
+          Title
+          <input id="itemTitle" required maxlength="80" placeholder="Blood pressure check" aria-describedby="itemTitleError">
+          <span id="itemTitleError" class="error-message">Title is required.</span>
+        </label>
+
+        <div id="composerDefaultFields">
+          <div class="form-grid">
+            <label>
+              Date
+              <input id="itemDate" type="date">
+            </label>
+            <label>
+              Time
+              <input id="itemTime" type="time">
+            </label>
+          </div>
+
+          <label>
+            Assigned to
+            <input id="itemOwner" maxlength="40" placeholder="Maya">
+          </label>
+        </div>
+
+        <div id="composerContactFields" class="is-hidden">
+          <label>
+            Contact Category
+            <select id="contactCategory" required>
+              <option value="family-caregivers">Family & Caregivers</option>
+              <option value="medical-professionals">Medical Professionals</option>
+            </select>
+          </label>
+
+          <label id="contactDynamicInputLabel">
+            Relationship to Patient
+            <input id="contactDynamicInput" maxlength="40" placeholder="Parent, Spouse, Friend" required>
+          </label>
+
+          <div class="form-grid">
+            <label>
+              Country or region
+              <select id="contactPhoneRegion">
+                <option value="+1">United States / Canada (+1)</option>
+                <option value="+44">United Kingdom (+44)</option>
+                <option value="+65">Singapore (+65)</option>
+                <option value="+91">India (+91)</option>
+                <option value="+61">Australia (+61)</option>
+                <option value="+81">Japan (+81)</option>
+                <option value="+49">Germany (+49)</option>
+                <option value="+33">France (+33)</option>
+                <option value="+971">United Arab Emirates (+971)</option>
+              </select>
+            </label>
+            <label>
+              Phone Number
+              <div class="phone-row">
+                <span id="contactPhonePrefix">+1</span>
+                <input id="contactPhoneNumber" type="tel" maxlength="30" placeholder="Phone number" pattern="[0-9()\-\s]+" title="Phone number (digits, spaces, hyphens, parentheses only)">
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <label id="itemDetailsLabel">
+          Details
+          <textarea id="itemDetails" rows="4" maxlength="240" placeholder="Add instructions, dosage, location, or context."></textarea>
+        </label>
+
+        <div class="modal-actions">
+          <button class="secondary-button" value="cancel" type="button" id="cancelComposer">Cancel</button>
+          <button class="primary-button" value="default" type="submit">Save item</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="reminder-dialog" id="reminderDialog">
+      <form method="dialog" class="reminder-card" id="reminderForm">
+        <div>
+          <p class="eyebrow" id="reminderType">Reminder</p>
+          <h2 id="reminderTitle">Medicine time</h2>
+        </div>
+        <p id="reminderDetails">It is time for care.</p>
+        <div class="reminder-actions">
+          <button class="secondary-button" type="button" id="dismissReminder">Remind me later</button>
+          <button class="primary-button" type="submit" id="confirmReminder">Done</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="composer" id="profileDialog">
+      <form method="dialog" class="composer-form" id="profileForm">
+        <div class="modal-head">
+          <div>
+            <p class="eyebrow">Loved one profile</p>
+            <h2>Who are you caring for?</h2>
+            <p class="profile-required-message">Please fill out the profile to get started.</p>
+          </div>
+          <button class="icon-button" type="button" id="closeProfile" aria-label="Close">x</button>
+        </div>
+
+        <label>
+          Loved one's name
+          <input id="profileName" required maxlength="60" placeholder="Name">
+        </label>
+
+        <div class="form-grid">
+          <label>
+            Relationship
+            <input id="profileRelationship" maxlength="40" placeholder="Parent, spouse, friend">
+          </label>
+          <label>
+            Care focus
+            <input id="profileFocus" maxlength="60" placeholder="Recovery, daily support, memory care">
+          </label>
+        </div>
+
+        <label>
+          Emergency contact name
+          <input id="profileEmergencyName" maxlength="60" placeholder="Doctor, family member, clinic">
+        </label>
+
+        <div class="form-grid">
+          <label>
+            Country or region
+            <select id="profilePhoneRegion">
+              <option value="+1">United States / Canada (+1)</option>
+              <option value="+44">United Kingdom (+44)</option>
+              <option value="+65">Singapore (+65)</option>
+              <option value="+91">India (+91)</option>
+              <option value="+61">Australia (+61)</option>
+              <option value="+81">Japan (+81)</option>
+              <option value="+49">Germany (+49)</option>
+              <option value="+33">France (+33)</option>
+              <option value="+971">United Arab Emirates (+971)</option>
+            </select>
+          </label>
+          <label>
+            Age (optional)
+            <input id="profileAge" type="number" min="0" max="120" placeholder="e.g., 75">
+          </label>
+        </div>
+
+        <label>
+          Blood Type (optional)
+          <input id="profileBloodType" maxlength="5" placeholder="e.g., O+">
+        </label>
+
+        <label>
+          Primary Doctor Phone (optional)
+          <input id="profilePrimaryDoctorPhone" type="tel" maxlength="30" placeholder="e.g., +1 555-123-4567" pattern="[0-9()\-\s+]+" title="Phone number (digits, spaces, hyphens, parentheses, plus only)">
+        </label>
+
+        <label>
+          Medical Conditions (optional)
+          <textarea id="profileMedicalConditions" rows="3" maxlength="240" placeholder="List chronic conditions, allergies, or other relevant medical history."></textarea>
+        </label>
+
+        <label>
+          Emergency phone
+          <div class="phone-row">
+            <span id="phonePrefix">+1</span>
+            <input id="profileEmergencyPhone" type="tel" maxlength="30" placeholder="Phone number" pattern="[0-9()\-\s]+" title="Phone number (digits, spaces, hyphens, parentheses only)">
+          </div>
+        </label>
+
+        <div class="modal-actions">
+          <button class="secondary-button" value="cancel" type="button" id="cancelProfile">Cancel</button>
+          <button class="primary-button" value="default" type="submit">Save profile</button>
+          <button class="danger-button" type="button" id="deleteProfileButton">Delete Profile</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="composer" id="deleteConfirmationDialog">
+      <form method="dialog" class="composer-form" id="deleteConfirmationForm">
+        <div class="modal-head">
+          <div>
+            <p class="eyebrow">Confirm deletion</p>
+            <h2>WARNING: Delete Patient Profile</h2>
+          </div>
+          <button class="icon-button" type="button" value="cancel" aria-label="Close">×</button>
+        </div>
+        <p>This will permanently erase ALL medical history, tasks, and medication alarms for <strong id="patientNameToDelete"></strong>. This action cannot be undone. Type "DELETE" to confirm.</p>
+        <label>
+          Type DELETE to confirm
+          <input id="deleteConfirmationInput" type="text" required>
+        </label>
+        <div class="modal-actions">
+          <button class="secondary-button" value="cancel" type="button">Cancel</button>
+          <button class="danger-button" type="submit" id="confirmDeleteButton" disabled>Delete</button>
+        </div>
+      </form>
+    </dialog>
+
+    <button class="emergency-fab" id="emergencyFab" aria-label="Emergency Speed Dial">
+      🚨
+    </button>
+
+    <dialog class="composer" id="emergencyDialog">
+      <div class="composer-form">
+        <div class="modal-head">
+          <div>
+            <p class="eyebrow">Emergency contacts</p>
+            <h2>Speed Dial</h2>
+          </div>
+          <button class="icon-button" type="button" value="close" aria-label="Close">×</button>
+        </div>
+        <div class="emergency-info">
+          <p><strong>Patient:</strong> <span id="emergencyPatientName"></span></p>
+          <p><strong>Blood Type:</strong> <span id="emergencyBloodType">N/A</span></p>
+        </div>
+        <div class="emergency-contacts-list">
+          <h3>Emergency Contact</h3>
+          <div class="contact-entry">
+            <p><span id="emergencyContactName">N/A</span></p>
+            <a id="emergencyContactPhoneLink" href="#" class="primary-button">Call <span id="emergencyContactPhone">N/A</span></a>
+          </div>
+          <h3>Primary Doctor</h3>
+          <div class="contact-entry">
+            <p>Dr. <span id="emergencyPrimaryDoctorName">N/A</span></p>
+            <a id="emergencyPrimaryDoctorPhoneLink" href="#" class="primary-button">Call <span id="emergencyPrimaryDoctorPhone">N/A</span></a>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button class="secondary-button" value="close" type="button">Close</button>
+        </div>
+      </div>
+    </dialog>
+
+    <script src="app.js"></script>
+  </body>
+</html>
