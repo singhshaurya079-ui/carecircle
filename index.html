@@ -2,9 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>CareCircle</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
   </head>
   <body>
     <div class="app-shell">
@@ -39,7 +40,7 @@
           <button class="nav-tab" type="button" data-view="tasks">Tasks</button>
           <button class="nav-tab" type="button" data-view="medicine">Medicine</button>
           <button class="nav-tab" type="button" data-view="appointments">Appointments</button>
-          <button class="nav-tab" type="button" data-view="procedures">Procedures & Surgeries</button>
+          <button class="nav-tab" type="button" data-view="procedures">Procedures &amp; Surgeries</button>
           <button class="nav-tab" type="button" data-view="notes">Notes</button>
           <button class="nav-tab" type="button" data-view="contacts">Contacts</button>
         </nav>
@@ -170,7 +171,7 @@
             </div>
             <div class="contact-groups-container">
                 <div class="contact-group">
-                    <h3>Family & Caregivers</h3>
+                    <h3>Family &amp; Caregivers</h3>
                     <div class="contact-grid" id="familyCaregiversGrid"></div>
                 </div>
                 <div class="contact-group">
@@ -249,7 +250,7 @@
           <label>
             Contact Category
             <select id="contactCategory" required>
-              <option value="family-caregivers">Family & Caregivers</option>
+              <option value="family-caregivers">Family &amp; Caregivers</option>
               <option value="medical-professionals">Medical Professionals</option>
             </select>
           </label>
